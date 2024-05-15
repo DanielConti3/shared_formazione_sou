@@ -14,11 +14,7 @@ while [[ "$answer" =~ [YyNn] ]]; do
   if [[ "$answer" =~ [Yy] ]]; then
 
     read -p "Cosa vuoi aggiungere? " newelement
-
     activity+=("$newelement")
-
-    echo "${activity[@]}"
-
     read -p "Vuoi aggiungerne un'altro? (Y/N) " answer
 
 #Break loop
