@@ -1,8 +1,10 @@
 #! /bin/bash
 #branch test
+source funzioni.sh
+
+
 
 #variables
-
 logdir=/Users/$USER/Desktop/login
 credentials=/Users/$USER/Desktop/login/credenziali.txt
 
@@ -19,7 +21,7 @@ if [[ "$confirmation" =~ [Nn] ]]; then
     read -p "username for new account:  " newuser
 
 #if username already exist ask for a new one
-    while grep "$newuser\:*" $credentials>/dev/null
+    while grep "$newuser"":""*" $credentials>/dev/null
     do
 
         read -p "Username already taken, try again:  " newuser
@@ -29,7 +31,7 @@ if [[ "$confirmation" =~ [Nn] ]]; then
     read -p "password for new account:  " newpass
 	
 #save new username and password in file then ask for a new login
-    echo ""$newuser\:$newpass  >> $credentials
+    echo "$newuser"":""$newpass"  >> $credentials
 
     read -p "Would you like to login now?(Y/N)  " confirmation
 fi
@@ -44,7 +46,7 @@ if [[ "$confirmation" =~ [Yy] ]]; then
         read -p "password: " password
 
 #check credential inside txt file
-        if grep "$username\:$password" $credentials>/dev/null; then
+        if grep "$username"":""$password" $credentials>/dev/null; then
 
             echo "Welcome back $username"
             break
@@ -67,3 +69,8 @@ else
     echo "Invalid character"
 	
 fi
+
+create_list
+
+random_selector
+
