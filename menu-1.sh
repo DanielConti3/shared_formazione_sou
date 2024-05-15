@@ -1,33 +1,36 @@
 #!/bin/bash
+#
+#Function initializing, give a random option among the elements of the array
 source Funzioni.sh
 
-
+#Declare array
 activity=()
 
-i=1
-
+#Start loop to fill the array
 read -p "Vuoi aggiungere un'attività? (Y/N) " answer
-
 
 while [[ "$answer" =~ [YyNn] ]]; do
 
   if [[ "$answer" =~ [Yy] ]]; then
 
-     read -p "Cosa vuoi aggiungere? " newelement
+    read -p "Cosa vuoi aggiungere? " newelement
 
-     activity+=("$newelement")
+    activity+=("$newelement")
 
-     echo "${activity[@]}"
+    echo "${activity[@]}"
 
-     read -p "vuoi aggiungerne un'altro? (Y/N) " answer
+    read -p "Vuoi aggiungerne un'altro? (Y/N) " answer
 
-   else
+#Break loop
+  elif [[ "$answer" =~ [Nn] ]]; then
 
-    echo "addio"
-    break 
+    echo -e "La tua lista è: ${activity[@]}\n"
+    break
+
   fi
 done
 
+#Start Function
 random_selector
  
 
