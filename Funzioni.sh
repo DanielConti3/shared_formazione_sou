@@ -12,13 +12,13 @@ index=$(($RANDOM % $array_length))
 #Inizialize question loop
 while [[ $array_length -gt 0 ]]; do
   
-  echo -e "\nTi va di giocare a ${activity[$index]}?\n"
-  read -p 'Inserisci "Y" per giocare o "N" per saltare: ' answer
+  echo -e "\nWould you like to play at? ${activity[$index]}?\n"
+  read -p '"Y" to confirm or "N" to try a new one ' answer
 
 #Answer "si"  
   if [[ "$answer" =~ [Yy] ]]; then
 
-    echo "Ottimo! Iniziamo a giocare a ${activity[$index]}."
+    echo "Nice! Lets play at ${activity[$index]}."
     break
 
 #Answer "no"
@@ -44,12 +44,12 @@ while [[ $array_length -gt 0 ]]; do
 #If all elemnts have alredy been suggested and new_array is empty close progra, if not suggest new onem    
     if [[ $array_length -eq 0 ]]; then
 
-      echo -e "\nMi dispiace, non ho più giochi da proporre!\n"
+      echo -e "\nSorry, no other game are aviable in your list!\n"
       break
 
     else 
 
-      echo "Ok, proviamo un altro gioco."
+      echo "Ok, lets try with another one!"
       index=$(($RANDOM % $array_length))     
     
     fi
@@ -57,7 +57,7 @@ while [[ $array_length -gt 0 ]]; do
 #If answer is not "si" or "no" ask again for same element of the array
   else 
 
-    echo "Risposta non valida, riprova"
+    echo "Wrong imput, use only (Y/N)."
 
   fi
 
@@ -78,7 +78,7 @@ arraytxt=/Users/$USER/Desktop/array/$username.txt
 activity=($(<"$arraytxt")) 
 
 #Start loop to fill the array
-read -p "Vuoi aggiungere un'attività? (Y/N) " answer
+read -p "Would you like to add an activity? (Y/N) " answer
 
 while [[ "$answer" != [YyNn] ]]; do
 
@@ -91,10 +91,10 @@ while [[ "$answer" =~ [YyNn] ]]; do
 
   if [[ "$answer" =~ [Yy] ]]; then
 
-    read -p "Cosa vuoi aggiungere? " newelement
+    read -p "What would you want to add? " newelement
     echo $newelement >> $arraytxt
     activity+=("$newelement")
-    read -p "Vuoi aggiungerne un'altro? (Y/N) " answer
+    read -p "Would you like to add something else? (Y/N) " answer
 
     while [[ "$answer" != [YyNn] ]]; do
 
