@@ -2,7 +2,7 @@
 
 #This script is a compendium of functions
 
-#This script is intended to randomly select an element in the array and propose it to the user
+#This function is intended to randomly select an element in the array and propose it to the user
 function random_selector {
 
 #Declare variables
@@ -12,7 +12,7 @@ index=$(($RANDOM % $array_length))
 #Inizialize question loop
 while [[ $array_length -gt 0 ]]; do
   
-  echo -e "\nWould you like to play at? ${activity[$index]}?\n"
+  echo -e "\nWould you like to play at ${activity[$index]}?\n"
   read -p '"Y" to confirm or "N" to try a new one ' answer
 
 #Answer "si"  
@@ -71,8 +71,10 @@ function create_list {
 arraydir=/Users/$USER/Desktop/array
 arraytxt=/Users/$USER/Desktop/array/$username.txt
 
+
+
 [ -d $arraydir ] || mkdir $arraydir
-[ -f $arraytxt ] || touch $arraytxt
+[ -f $arraytxt ] && chmod u=rw,go=r $arraytxt || touch $arraytxt 
 
 #Declare array
 activity=($(<"$arraytxt")) 
@@ -107,7 +109,7 @@ while [[ "$answer" =~ [YyNn] ]]; do
 #Check intentions to remove element
   elif [[ "$answer" =~ [Nn] ]]; then
     
-    read -p "would you like to remove an activity from the list? (Y/N) " remove 
+    read -p "Would you like to remove an activity from the list? (Y/N) " remove 
     
     while [[ "$remove" != [YyNn] ]]; do
 
@@ -115,7 +117,7 @@ while [[ "$answer" =~ [YyNn] ]]; do
       read remove
 
     done
-
+    
 #Start loop to remove elemnt
     while [[ "$remove" =~ [Yy] ]]; do 
     
@@ -136,7 +138,90 @@ while [[ "$answer" =~ [YyNn] ]]; do
     
     done
 
+#Break from loop
+    if [[ "$remove" =~ [Nn] ]]; then
+
+      break
+    
+    fi
+
   fi
 done
+
+chmod a-rwx $arraytxt
+
+}
+
+#This function allows user to create and login in an account
+function login {
+
+#variables
+logdir=/Users/$USER/Desktop/login
+credentials=/Users/$USER/Desktop/login/credenziali.txt
+
+#check login dir and file existance or create it
+[ -d $logdir ] || mkdir $logdir
+[ -f $credentials ] && chmod u=rw,go= $credentials || touch $credentials
+
+#ask if user already has account
+read -p "Do you have an account?(Y/N)  " confirmation
+echo
+
+#create new account if no
+if [[ "$confirmation" =~ [Nn] ]]; then
+
+    read -p "username for new account:  " newuser
+
+#if username already exist ask for a new one
+    while grep "$newuser"":""*" $credentials>/dev/null
+    do
+
+        read -p "Username already taken, try again:  " newuser
+
+    done
+
+    read -p "password for new account:  " -s  newpass
+	
+#save new username and password in file then ask for a new login
+    echo "$newuser"":""$newpass"  >> $credentials
+
+    read -p "Would you like to login now?(Y/N)  " confirmation
+fi
+
+#start login process
+if [[ "$confirmation" =~ [Yy] ]]; then
+
+    for i in {1..3}
+    do
+    
+        read -p "username: " username
+        read -p "password: " -s password
+
+#check credential inside txt file
+        if grep "$username"":""$password" $credentials>/dev/null; then
+
+            echo -e "\nWelcome back $username\n"
+            break
+				
+	else
+  
+	     k=$((3-i))
+             echo -e "\nWrong credential, $k attemps remaining"
+
+        fi
+
+    done
+
+elif [[ "$confirmation" =~ [Nn] ]]; then
+
+    echo "Good bye"
+
+else
+
+    echo "Invalid character"
+	
+fi
+
+chmod a= $credentials
 
 }
