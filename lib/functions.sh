@@ -23,7 +23,7 @@ while [[ $array_length -gt 0 ]]; do
 #Answer "si"  
   if [[ "$answer" =~ [Yy] ]]; then
     echo "Nice! Lets play at ${activity[$index]}."
-    break
+    exit
 
 #Answer "no"
   elif [[ "$answer" =~ [Nn] ]]; then
@@ -141,11 +141,12 @@ IFS=$old_ifs
 function login {
 
 #variables
-
 scriptpath=$(readlink -f $0)
 dirpath=$(dirname $scriptpath)
 logdir=$dirpath/login
 credentials=$dirpath/login/credenziali.txt
+
+
 
 #check login dir and file existance or create it
 [ -d $logdir ] || mkdir $logdir
@@ -168,6 +169,7 @@ if [[ "$confirmation" =~ [Nn] ]]; then
 	
 #save new username and password in file then ask for a new login
     echo "$newuser"":""$newpass"  >> $credentials
+    echo
     read -p "Would you like to login now?(Y/N)  " confirmation
 fi
 
@@ -186,18 +188,41 @@ if [[ "$confirmation" =~ [Yy] ]]; then
     else  
       k=$((3-i))
       echo -e "\nWrong credential, $k attemps remaining"
+      if [[ $k -eq 0 ]]; then
+        echo -e "\nNo more attempts aviable"
+        exit
+      fi
     fi
 
   done
 
 elif [[ "$confirmation" =~ [Nn] ]]; then
   echo "Good bye"
-
+  exit 
 else
   echo "Invalid character"
 	
 fi
 
 chmod a= $credentials
+
+}
+
+function quit {
+
+echo -e "Do you want to quit the program or go back to the menu?\n Q) Quit;\n M) Menu;"
+read -p ":" quit
+while [[ "$quit" != [QqMm] ]]; do
+  echo -e "\nWrong imput, try again\n"
+  echo -e "Do you want to quit the pr function [buffer]  the menu?\n Q) Quit;\n M) Menu;"
+  read -p ":" quit  
+
+done
+
+if [[ "$quit" =~ [Qq] ]]; then
+  exit
+  
+fi  
+
 
 }
