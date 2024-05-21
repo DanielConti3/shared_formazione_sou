@@ -1,5 +1,5 @@
 Introduction
 ============
 
-My collegues and I decided to create this repo so that we could push exercises and activities made together,
-while also having an easy access to shared scripts created using Bash (Bourne Again Shell).
+My colleagues and I created this repository to push exercises and activities we create together.
+It also provides easy access to shared Bash (Bourne Again Shell) scripts.
