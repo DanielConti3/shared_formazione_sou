@@ -1,0 +1,48 @@
+---
+- name: Host connection
+  hosts: default
+  remote_user: vagrant
+  become: yes
+  tasks:
+    - name: Install dnf-plugins-core
+      dnf:
+        name:
+          - dnf-plugins-core
+          - python3-requests
+        state: present
+
+    - name: Add Docker CE repository
+      command: dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
+      args:
+        creates: /etc/yum.repos.d/docker-ce.repo
+
+    - name: Install Docker
+      dnf:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+        state: present
+        update_cache: yes
+
+    - name: Start and enable Docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Pull Jenkins image
+      command: docker pull docker.io/jenkins/jenkins:lts
+
+    - name: Start jenkins container
+      docker_container:
+        name: jenkins
+        image: docker.io/jenkins/jenkins:lts
+        ports: 
+          - "8080:8080"
+          - "50000:50000"
+        volumes: 
+          - /var/run/docker.sock
+
+
+ 
