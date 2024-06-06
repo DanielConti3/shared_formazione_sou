@@ -3,10 +3,10 @@
 My colleagues and I decided to make this repository to push exercises and activities we create together. Our intent was to have a shared repository where we could publish all the projects and materials we worked on as a team. With time, in this repo there will be added more folders, files and scripts regarding different concepts that we will work on during our DevOps Academy.
 ## Getting Started
 > [!NOTE]
-> All scripts were created so that even if the user ends up writing a mistaken input, you will always be asked to retry.
+> Not all scripts were created to be foolproof, the exercises present on this repo are only for practising reasons, so when inserting inputs please be careful about what you are writing, since a wrong input might cause the scripts to break down.
 
 > [!IMPORTANT]
-> To run all the scripts we highly suggest using either 'bash' or 'sh' command.
+> To run all the scripts we highly suggest using either the `bash` or `sh` command.
  
 An example could be:
 ```
