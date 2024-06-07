@@ -24,6 +24,22 @@
         group: vagrant
         mode: "0740"
 
+    - name: Copy casc.yaml
+      ansible.builtin.template:
+        src: ./casc.yaml
+        dest: ./
+        owner: vagrant
+        group: vagrant
+        mode: "0740"
+
+    - name: Copy plugins.txt
+      ansible.builtin.template:
+        src: ./plugins.txt
+        dest: ./
+        owner: vagrant
+        group: vagrant
+        mode: "0740"
+
     - name: Install Docker
       dnf:
         name:
@@ -62,4 +78,3 @@
 
         
 
- 
