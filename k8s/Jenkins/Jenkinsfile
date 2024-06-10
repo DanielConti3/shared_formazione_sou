@@ -1,7 +1,7 @@
 pipeline {
     environment {
-        imagename = "andreavomero99/ciao"
-        registryCredential = 'DockerHub'
+        imagename = "DockerHub_ID/DOckerHub_Repo" //Use your DockerHub id/repo
+        registryCredential = 'DockerHub'  //Make shure your jenkins credential for DockerHub id is "DockerHub"
         dockerImage = ''
         BRANCH_NAME = ''
         GIT_TAG = ''
@@ -16,7 +16,7 @@ pipeline {
         stage('Cloning Git') {
             steps {
                 script {
-                    git branch: 'main', credentialsId: 'GitHub', url: 'https://github.com/AndreaVomero99/fomazione_sou_k8s'
+                    git branch: 'main', credentialsId: 'GitHub', url: 'https://github.com/DanielConti3/shared_fomazione_sou'
                     BRANCH_NAME = sh(script: 'git rev-parse --abbrev-ref HEAD', returnStdout: true).trim()
                     GIT_TAG = sh(script: 'git describe --tags --exact-match || echo ""', returnStdout: true).trim()
                     echo "Cloned Branch: ${BRANCH_NAME}"
